@@ -1,11 +1,12 @@
 import { useRouterContext } from "../app/state";
 import { Button, Card, Typography } from "../components";
+import { ROUTES } from "../types/router";
 
 const HomePage = () => {
   const { navigate } = useRouterContext();
 
   const handleStart = () => {
-    navigate("/question-1");
+    navigate(ROUTES.QUESTION_1);
   };
 
   return (

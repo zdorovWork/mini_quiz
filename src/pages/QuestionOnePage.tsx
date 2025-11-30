@@ -3,6 +3,7 @@ import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
+import { ROUTES } from "../types/router";
 
 const QuestionOnePage = () => {
   const { navigate } = useRouterContext();
@@ -28,7 +29,7 @@ const QuestionOnePage = () => {
 
   const handleNext = () => {
     if (selectedAnswer !== null) {
-      navigate("/question-2");
+      navigate(ROUTES.QUESTION_2);
     }
   };
 

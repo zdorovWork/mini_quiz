@@ -1,8 +1,8 @@
 import { useRouterContext } from "./RouterContext";
-import type { Routes } from "../types/router";
+import type { TRoutes } from "../types/router";
 
 interface RouterProps {
-  routes: Routes;
+  routes: TRoutes;
 }
 
 export const Router = ({ routes }: RouterProps) => {

@@ -4,13 +4,13 @@ import HomePage from "../pages/HomePage";
 import QuestionOnePage from "../pages/QuestionOnePage";
 import QuestionTwoPage from "../pages/QuestionTwoPage";
 import ResultsPage from "../pages/ResultsPage";
-import type { Routes } from "../types/router";
+import { ROUTES, type TRoutes } from "../types/router";
 
-const routes: Routes = [
-  { path: "/", element: <HomePage /> },
-  { path: "/question-1", element: <QuestionOnePage /> },
-  { path: "/question-2", element: <QuestionTwoPage /> },
-  { path: "/results", element: <ResultsPage /> },
+const routes: TRoutes = [
+  { path: ROUTES.HOME, element: <HomePage /> },
+  { path: ROUTES.QUESTION_1, element: <QuestionOnePage /> },
+  { path: ROUTES.QUESTION_2, element: <QuestionTwoPage /> },
+  { path: ROUTES.RESULTS, element: <ResultsPage /> },
 ];
 
 const App = () => {

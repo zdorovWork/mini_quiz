@@ -4,6 +4,7 @@ import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { validateEmail } from "../utils/validation";
 import { Button, Card, Typography, Modal, Input } from "../components";
+import { ROUTES } from "../types/router";
 
 const QuestionTwoPage = () => {
   const { navigate } = useRouterContext();
@@ -56,7 +57,7 @@ const QuestionTwoPage = () => {
 
     setEmail(emailInput);
     setIsModalOpen(false);
-    navigate("/results");
+    navigate(ROUTES.RESULTS);
   };
 
   return (

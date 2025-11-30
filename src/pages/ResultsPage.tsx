@@ -3,6 +3,7 @@ import { useQuizState } from "../hooks/useQuizState";
 import { resetState } from "../app/state";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
+import { ROUTES } from "../types/router";
 
 const ResultsPage = () => {
   const { navigate } = useRouterContext();
@@ -10,7 +11,7 @@ const ResultsPage = () => {
 
   const handleTryAgain = () => {
     resetState();
-    navigate("/question-1");
+    navigate(ROUTES.QUESTION_1);
   };
 
   const calculateScore = () => {
