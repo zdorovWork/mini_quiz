@@ -5,6 +5,8 @@ interface UseRouterReturn {
   navigate: (path: string) => void;
 }
 
+const NAVIGATE_EVENT = "navigate";
+
 export const useRouter = (): UseRouterReturn => {
   const [currentPath, setCurrentPath] = useState<string>(
     window.location.pathname
@@ -15,17 +17,26 @@ export const useRouter = (): UseRouterReturn => {
       setCurrentPath(window.location.pathname);
     };
 
+    const handleNavigate = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
     window.addEventListener("popstate", handlePopState);
+    window.addEventListener(NAVIGATE_EVENT, handleNavigate);
 
     return () => {
       window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener(NAVIGATE_EVENT, handleNavigate);
     };
   }, []);
 
   const navigate = (path: string) => {
     window.history.pushState({}, "", path);
-    setCurrentPath(path);
+    window.dispatchEvent(new Event(NAVIGATE_EVENT));
   };
 
-  return { currentPath, navigate };
+  return {
+    currentPath,
+    navigate,
+  };
 };
