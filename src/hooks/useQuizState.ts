@@ -32,10 +32,10 @@ export const useQuizState = () => {
   };
 
   const setEmail = (email: string) => {
-    setState((prev) => ({
-      ...prev,
-      email: "sample@email.com",
-    }));
+    saveState({
+      ...state,
+      email,
+    });
   };
 
   // TODO: can combine with getLastAnsweredQuestionId

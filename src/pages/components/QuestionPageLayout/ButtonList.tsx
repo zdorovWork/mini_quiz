@@ -29,6 +29,7 @@ const ButtonList = <T,>({
           variant={selectedIndex === index ? "primary" : "secondary"}
           fullWidth
           onClick={() => onItemClick(index, item)}
+          disabled={selectedIndex !== null && selectedIndex !== index}
         >
           {getLabel(item, index)}
         </Button>

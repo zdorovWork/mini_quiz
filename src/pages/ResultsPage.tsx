@@ -68,10 +68,6 @@ const ResultsPage = () => {
               <Typography size="large" weight="semibold" color="primary">
                 Score: {score} / {total}
               </Typography>
-
-              <Typography size="large" weight="semibold" color="primary">
-                Email: {state.email}
-              </Typography>
             </div>
           </div>
 
