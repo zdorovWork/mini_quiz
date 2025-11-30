@@ -2,9 +2,10 @@ import { RouterProvider } from "./RouterContext";
 import { Router } from "./router";
 import HomePage from "../pages/HomePage";
 import QuestionOnePage from "../pages/QuestionOnePage";
-import QuestionTwoPage from "../pages/QuestionTwoPage";
+import QuestionTwoPage from "../pages/QuestionTwoPage/QuestionTwoPage";
 import ResultsPage from "../pages/ResultsPage";
 import { ROUTES, type TRoutes } from "../types/router";
+import { ModalProvider } from "./ModalContext";
 
 const routes: TRoutes = [
   { path: ROUTES.HOME, element: <HomePage /> },
@@ -15,9 +16,11 @@ const routes: TRoutes = [
 
 const App = () => {
   return (
-    <RouterProvider>
-      <Router routes={routes} />
-    </RouterProvider>
+    <ModalProvider>
+      <RouterProvider>
+        <Router routes={routes} />
+      </RouterProvider>
+    </ModalProvider>
   );
 };
 

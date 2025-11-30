@@ -1,12 +1,13 @@
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, ReactNode } from "react";
 import { useRouter } from "../hooks/useRouter";
+import { useStrictContext } from "../hooks/useStrictContext";
 
-interface RouterContextValue {
+type TRouterContextValue = {
   currentPath: string;
   navigate: (path: string) => void;
-}
+};
 
-const RouterContext = createContext<RouterContextValue | null>(null);
+const RouterContext = createContext<TRouterContextValue | null>(null);
 
 interface RouterProviderProps {
   children: ReactNode;
@@ -20,12 +21,11 @@ export const RouterProvider = ({ children }: RouterProviderProps) => {
   );
 };
 
-export const useRouterContext = (): RouterContextValue => {
-  const context = useContext(RouterContext);
-
-  if (!context) {
-    throw new Error("useRouterContext must be used within RouterProvider");
-  }
+export const useRouterContext = (): TRouterContextValue => {
+  const context = useStrictContext<TRouterContextValue>(
+    RouterContext,
+    "RouterContext"
+  );
 
   return context;
 };
