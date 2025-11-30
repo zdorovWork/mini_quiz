@@ -8,5 +8,4 @@ export interface Question {
 export interface QuizState {
   answers: Record<string, number | null>;
   email: string | null;
-  step: number;
 }

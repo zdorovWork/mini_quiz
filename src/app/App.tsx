@@ -1,16 +1,14 @@
 import { RouterProvider } from "./RouterContext";
 import { Router } from "./router";
 import HomePage from "../pages/HomePage";
-import QuestionOnePage from "../pages/QuestionOnePage";
-import QuestionTwoPage from "../pages/QuestionTwoPage/QuestionTwoPage";
+import QuestionPage from "../pages/QuestionPage";
 import ResultsPage from "../pages/ResultsPage";
 import { ROUTES, type TRoutes } from "../types/router";
 import { ModalProvider } from "./ModalContext";
 
 const routes: TRoutes = [
   { path: ROUTES.HOME, element: <HomePage /> },
-  { path: ROUTES.QUESTION_1, element: <QuestionOnePage /> },
-  { path: ROUTES.QUESTION_2, element: <QuestionTwoPage /> },
+  { path: "/question/:questionId", element: <QuestionPage /> },
   { path: ROUTES.RESULTS, element: <ResultsPage /> },
 ];
 

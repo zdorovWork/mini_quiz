@@ -7,7 +7,6 @@ const STORAGE_KEY = "quiz-state";
 const defaultState: QuizState = {
   answers: {},
   email: null,
-  step: 0,
 };
 
 const isValidQuizState = (data: unknown): data is QuizState => {
@@ -24,10 +23,7 @@ const isValidQuizState = (data: unknown): data is QuizState => {
     state.email === null ||
     (typeof state.email === "string" && state.email.length > 0);
 
-  const hasValidStep =
-    typeof state.step === "number" && state.step >= 0 && state.step <= 4;
-
-  return hasValidAnswers && hasValidEmail && hasValidStep;
+  return hasValidAnswers && hasValidEmail;
 };
 
 export const loadState = (): QuizState => {

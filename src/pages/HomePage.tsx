@@ -1,12 +1,15 @@
 import { useRouterContext } from "../app/state";
 import { Button, Card, Typography } from "../components";
-import { ROUTES } from "../types/router";
+import { QUIZ_ORDER } from "../utils/questions";
 
 const HomePage = () => {
   const { navigate } = useRouterContext();
 
   const handleStart = () => {
-    navigate(ROUTES.QUESTION_1);
+    const firstQuestionId = QUIZ_ORDER[0];
+    if (firstQuestionId) {
+      navigate(`/question/${firstQuestionId}`);
+    }
   };
 
   return (

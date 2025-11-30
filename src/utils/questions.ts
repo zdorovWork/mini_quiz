@@ -14,3 +14,5 @@ export const QUIZ_QUESTIONS: Question[] = [
     correct: 1,
   },
 ];
+
+export const QUIZ_ORDER = ["question-1", "question-2"];

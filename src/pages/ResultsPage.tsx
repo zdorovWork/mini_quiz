@@ -1,9 +1,8 @@
 import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { resetState } from "../app/state";
-import { QUIZ_QUESTIONS } from "../utils/questions";
+import { QUIZ_QUESTIONS, QUIZ_ORDER } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
-import { ROUTES } from "../types/router";
 
 const ResultsPage = () => {
   const { replace } = useRouterContext();
@@ -11,7 +10,10 @@ const ResultsPage = () => {
 
   const handleTryAgain = () => {
     resetState();
-    replace(ROUTES.QUESTION_1);
+    const firstQuestionId = QUIZ_ORDER[0];
+    if (firstQuestionId) {
+      replace(`/question/${firstQuestionId}`);
+    }
   };
 
   const calculateScore = () => {

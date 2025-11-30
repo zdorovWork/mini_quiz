@@ -6,6 +6,7 @@ type TRouterContextValue = {
   currentPath: string;
   navigate: (path: string) => void;
   replace: (path: string) => void;
+  getParam: (paramName: string) => string | null;
 };
 
 const RouterContext = createContext<TRouterContextValue | null>(null);

@@ -5,10 +5,24 @@ interface RouterProps {
   routes: TRoutes;
 }
 
+const matchRoute = (routePath: string, currentPath: string): boolean => {
+  const routeParts = routePath.split("/").filter(Boolean);
+  const currentParts = currentPath.split("/").filter(Boolean);
+
+  if (routeParts.length !== currentParts.length) return false;
+
+  return routeParts.every((routePart, index) => {
+    if (routePart.startsWith(":")) return true;
+    return routePart === currentParts[index];
+  });
+};
+
 export const Router = ({ routes }: RouterProps) => {
   const { currentPath } = useRouterContext();
 
-  const currentRoute = routes.find((route) => route.path === currentPath);
+  const currentRoute = routes.find((route) =>
+    matchRoute(route.path, currentPath)
+  );
 
   if (!currentRoute) {
     return (
