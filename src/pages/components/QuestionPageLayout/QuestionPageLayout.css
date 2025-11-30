@@ -1,0 +1,29 @@
+.question-page-layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f9fafb;
+}
+
+.question-page-layout__container {
+  max-width: 600px;
+  width: 100%;
+}
+
+.question-page-layout__header {
+  margin-bottom: 24px;
+}
+
+.question-page-layout__title {
+  margin-bottom: 32px;
+}
+
+.question-page-layout__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+

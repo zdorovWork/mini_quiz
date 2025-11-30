@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS } from "../utils/questions";
-import { Button, Card, Typography } from "../components";
 import { ROUTES } from "../types/router";
+import QuestionPageLayout from "./components/QuestionPageLayout";
+import { Button, Typography } from "../components";
+import ButtonList from "./components/QuestionPageLayout/ButtonList";
 
 const QuestionOnePage = () => {
   const { navigate } = useRouterContext();
@@ -34,61 +36,35 @@ const QuestionOnePage = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
-        backgroundColor: "#f9fafb",
-      }}
-    >
-      <div style={{ maxWidth: "600px", width: "100%" }}>
-        <Card>
-          <div style={{ marginBottom: "24px" }}>
-            <Typography size="small" color="secondary" weight="medium">
-              Question 1 of 2
-            </Typography>
-          </div>
-
-          <div style={{ marginBottom: "32px" }}>
-            <Typography size="xlarge" weight="bold" as="h1">
-              {question.text}
-            </Typography>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-              marginBottom: "32px",
-            }}
-          >
-            {question.options.map((option, index) => (
-              <Button
-                key={index}
-                variant={selectedAnswer === index ? "primary" : "secondary"}
-                fullWidth
-                onClick={() => handleAnswerSelect(index)}
-              >
-                {option}
-              </Button>
-            ))}
-          </div>
-
-          <Button
-            variant="primary"
-            fullWidth
-            onClick={handleNext}
-            disabled={selectedAnswer === null}
-          >
-            Next
-          </Button>
-        </Card>
-      </div>
-    </div>
+    <QuestionPageLayout
+      label={
+        <Typography size="small" color="secondary" weight="medium">
+          Question {1} of {2}
+        </Typography>
+      }
+      title={
+        <Typography size="xlarge" weight="bold" as="h1">
+          {question.text}
+        </Typography>
+      }
+      options={
+        <ButtonList
+          items={question.options}
+          selectedIndex={selectedAnswer}
+          onItemClick={(index) => handleAnswerSelect(index)}
+        />
+      }
+      nextButton={
+        <Button
+          variant="primary"
+          fullWidth
+          onClick={handleNext}
+          disabled={selectedAnswer === null}
+        >
+          Next
+        </Button>
+      }
+    />
   );
 };
 

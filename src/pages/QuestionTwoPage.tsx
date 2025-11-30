@@ -3,8 +3,10 @@ import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { validateEmail } from "../utils/validation";
-import { Button, Card, Typography, Modal, Input } from "../components";
 import { ROUTES } from "../types/router";
+import QuestionPageLayout from "./components/QuestionPageLayout";
+import { Button, Modal, Input, Typography } from "../components";
+import ButtonList from "./components/QuestionPageLayout/ButtonList";
 
 const QuestionTwoPage = () => {
   const { navigate } = useRouterContext();
@@ -61,62 +63,41 @@ const QuestionTwoPage = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
-        backgroundColor: "#f9fafb",
-      }}
-    >
-      <div style={{ maxWidth: "600px", width: "100%" }}>
-        <Card>
-          <div style={{ marginBottom: "24px" }}>
-            <Typography size="small" color="secondary" weight="medium">
-              Question 2 of 2
-            </Typography>
-          </div>
+    <QuestionPageLayout
+      label={
+        <Typography size="small" color="secondary" weight="medium">
+          Question {2} of {2}
+        </Typography>
+      }
+      title={
+        <Typography size="xlarge" weight="bold" as="h1">
+          {question.text}
+        </Typography>
+      }
+      options={
+        <ButtonList
+          items={question.options}
+          selectedIndex={selectedAnswer}
+          onItemClick={(index) => handleAnswerSelect(index)}
+        />
+      }
+      nextButton={
+        <Button
+          variant="primary"
+          fullWidth
+          onClick={handleComplete}
+          disabled={selectedAnswer === null}
+        >
+          Complete
+        </Button>
+      }
+    />
+  );
+};
 
-          <div style={{ marginBottom: "32px" }}>
-            <Typography size="xlarge" weight="bold" as="h1">
-              {question.text}
-            </Typography>
-          </div>
+export default QuestionTwoPage;
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-              marginBottom: "32px",
-            }}
-          >
-            {question.options.map((option, index) => (
-              <Button
-                key={index}
-                variant={selectedAnswer === index ? "primary" : "secondary"}
-                fullWidth
-                onClick={() => handleAnswerSelect(index)}
-              >
-                {option}
-              </Button>
-            ))}
-          </div>
-
-          <Button
-            variant="primary"
-            fullWidth
-            onClick={handleComplete}
-            disabled={selectedAnswer === null}
-          >
-            Complete
-          </Button>
-        </Card>
-      </div>
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div style={{ marginBottom: "24px" }}>
           <Typography size="large" weight="bold" as="h2">
             Enter Your Email
@@ -139,9 +120,4 @@ const QuestionTwoPage = () => {
         <Button variant="primary" fullWidth onClick={handleSaveEmail}>
           Save & Continue
         </Button>
-      </Modal>
-    </div>
-  );
-};
-
-export default QuestionTwoPage;
+      </Modal> */
