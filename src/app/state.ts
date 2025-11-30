@@ -1,2 +1,1 @@
-// Global application state
-export {};
+export { useRouter } from "../hooks/useRouter";

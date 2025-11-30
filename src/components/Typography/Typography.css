@@ -1,0 +1,73 @@
+.ui-typography {
+  margin: 0;
+  padding: 0;
+}
+
+/* Sizes */
+.ui-typography--size-small {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ui-typography--size-medium {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.ui-typography--size-large {
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.ui-typography--size-xlarge {
+  font-size: 28px;
+  line-height: 1.3;
+}
+
+/* Weights */
+.ui-typography--weight-normal {
+  font-weight: 400;
+}
+
+.ui-typography--weight-medium {
+  font-weight: 500;
+}
+
+.ui-typography--weight-semibold {
+  font-weight: 600;
+}
+
+.ui-typography--weight-bold {
+  font-weight: 700;
+}
+
+/* Alignment */
+.ui-typography--align-left {
+  text-align: left;
+}
+
+.ui-typography--align-center {
+  text-align: center;
+}
+
+.ui-typography--align-right {
+  text-align: right;
+}
+
+/* Colors */
+.ui-typography--color-primary {
+  color: #1f2937;
+}
+
+.ui-typography--color-secondary {
+  color: #6b7280;
+}
+
+.ui-typography--color-error {
+  color: #dc2626;
+}
+
+.ui-typography--color-success {
+  color: #16a34a;
+}
+
