@@ -5,6 +5,7 @@ import { useStrictContext } from "../hooks/useStrictContext";
 type TRouterContextValue = {
   currentPath: string;
   navigate: (path: string) => void;
+  replace: (path: string) => void;
 };
 
 const RouterContext = createContext<TRouterContextValue | null>(null);

@@ -7,6 +7,7 @@ interface TypographyProps {
   align?: "left" | "center" | "right";
   color?: "primary" | "secondary" | "error" | "success";
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
+  style?: React.CSSProperties;
 }
 
 const Typography = ({
@@ -16,6 +17,7 @@ const Typography = ({
   align = "left",
   color = "primary",
   as: Component = "p",
+  style,
 }: TypographyProps) => {
   const className = [
     "ui-typography",
@@ -25,7 +27,11 @@ const Typography = ({
     `ui-typography--color-${color}`,
   ].join(" ");
 
-  return <Component className={className}>{children}</Component>;
+  return (
+    <Component className={className} style={style}>
+      {children}
+    </Component>
+  );
 };
 
 export default Typography;

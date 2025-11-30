@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface UseRouterReturn {
   currentPath: string;
   navigate: (path: string) => void;
+  replace: (path: string) => void;
 }
 
 export const useRouter = (): UseRouterReturn => {
@@ -27,8 +28,14 @@ export const useRouter = (): UseRouterReturn => {
     setCurrentPath(path);
   };
 
+  const replace = (path: string) => {
+    window.history.replaceState({}, "", path);
+    setCurrentPath(path);
+  };
+
   return {
     currentPath,
     navigate,
+    replace,
   };
 };

@@ -6,12 +6,12 @@ import { Button, Card, Typography } from "../components";
 import { ROUTES } from "../types/router";
 
 const ResultsPage = () => {
-  const { navigate } = useRouterContext();
+  const { replace } = useRouterContext();
   const { state } = useQuizState();
 
   const handleTryAgain = () => {
     resetState();
-    navigate(ROUTES.QUESTION_1);
+    replace(ROUTES.QUESTION_1);
   };
 
   const calculateScore = () => {
