@@ -25,6 +25,7 @@ const QuestionPage = () => {
     setEmail,
     areAllQuestionsAnswered,
     getNextQuestionId,
+    hasAlreadyResults,
   } = useQuizState();
 
   const { showModal } = useModal<TEmailModalProps>()(EmailModal);
@@ -43,6 +44,11 @@ const QuestionPage = () => {
 
   const handleComplete = async () => {
     if (selectedAnswer === null) return;
+
+    if (hasAlreadyResults()) {
+      navigate(ROUTES.RESULTS);
+      return;
+    }
 
     const result = await showModal({
       initialEmail: state.email || undefined,

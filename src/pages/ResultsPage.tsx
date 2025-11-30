@@ -3,12 +3,15 @@ import { useQuizState } from "../hooks/useQuizState";
 import { resetState } from "../app/state";
 import { QUIZ_QUESTIONS, QUIZ_ORDER } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
+import { useEffect } from "react";
 
 const ResultsPage = () => {
   const { replace } = useRouterContext();
-  const { state } = useQuizState();
+  const { state, getLastAnsweredQuestionId, areAllQuestionsAnswered } =
+    useQuizState();
 
   const handleTryAgain = () => {
+    // TODO: shouldnt be imoported like that
     resetState();
     const firstQuestionId = QUIZ_ORDER[0];
     if (firstQuestionId) {
@@ -29,6 +32,16 @@ const ResultsPage = () => {
 
   const score = calculateScore();
   const total = QUIZ_QUESTIONS.length;
+
+  useEffect(() => {
+    if (!areAllQuestionsAnswered()) {
+      const lastAnsweredQuestionId = getLastAnsweredQuestionId();
+      if (lastAnsweredQuestionId) {
+        // TODO: move to routes object ROUTES
+        replace(`/question/${lastAnsweredQuestionId}`);
+      }
+    }
+  }, []);
 
   return (
     <div
@@ -54,6 +67,10 @@ const ResultsPage = () => {
             <div style={{ marginTop: "16px" }}>
               <Typography size="large" weight="semibold" color="primary">
                 Score: {score} / {total}
+              </Typography>
+
+              <Typography size="large" weight="semibold" color="primary">
+                Email: {state.email}
               </Typography>
             </div>
           </div>

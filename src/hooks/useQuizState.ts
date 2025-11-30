@@ -11,9 +11,10 @@ interface UseQuizStateReturn {
   areAllQuestionsAnswered: () => boolean;
   getLastAnsweredQuestionId: () => string | undefined;
   getNextQuestionId: (questionId: string) => string | undefined;
+  hasAlreadyResults: () => boolean;
 }
 
-export const useQuizState = (): UseQuizStateReturn => {
+export const useQuizState = () => {
   const [state, setState] = useState<QuizState>(loadState);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export const useQuizState = (): UseQuizStateReturn => {
   const setEmail = (email: string) => {
     setState((prev) => ({
       ...prev,
-      email,
+      email: "sample@email.com",
     }));
   };
 
@@ -62,6 +63,10 @@ export const useQuizState = (): UseQuizStateReturn => {
     return QUIZ_ORDER[questionIndex + 1];
   };
 
+  const hasAlreadyResults = () => {
+    return state.email !== null && state.email !== undefined;
+  };
+
   return {
     state,
     setAnswer,
@@ -70,5 +75,6 @@ export const useQuizState = (): UseQuizStateReturn => {
     getLastAnsweredQuestionId,
     areAllQuestionsAnswered,
     getNextQuestionId,
-  };
+    hasAlreadyResults,
+  } satisfies UseQuizStateReturn;
 };
