@@ -1,8 +1,8 @@
-import { useRouter } from "../app/state";
+import { useRouterContext } from "../app/state";
 import { Button, Card, Typography } from "../components";
 
 const HomePage = () => {
-  const { navigate } = useRouter();
+  const { navigate } = useRouterContext();
 
   const handleStart = () => {
     navigate("/question-1");

@@ -1,4 +1,4 @@
-import { useRouter } from "../hooks/useRouter";
+import { useRouterContext } from "./RouterContext";
 import type { Routes } from "../types/router";
 
 interface RouterProps {
@@ -6,7 +6,7 @@ interface RouterProps {
 }
 
 export const Router = ({ routes }: RouterProps) => {
-  const { currentPath } = useRouter();
+  const { currentPath } = useRouterContext();
 
   const currentRoute = routes.find((route) => route.path === currentPath);
 

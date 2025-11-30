@@ -5,34 +5,26 @@ interface UseRouterReturn {
   navigate: (path: string) => void;
 }
 
-const NAVIGATE_EVENT = "navigate";
-
 export const useRouter = (): UseRouterReturn => {
   const [currentPath, setCurrentPath] = useState<string>(
     window.location.pathname
   );
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
     };
 
-    const handleNavigate = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    window.addEventListener("popstate", handlePopState);
-    window.addEventListener(NAVIGATE_EVENT, handleNavigate);
+    window.addEventListener("popstate", handleLocationChange);
 
     return () => {
-      window.removeEventListener("popstate", handlePopState);
-      window.removeEventListener(NAVIGATE_EVENT, handleNavigate);
+      window.removeEventListener("popstate", handleLocationChange);
     };
   }, []);
 
   const navigate = (path: string) => {
     window.history.pushState({}, "", path);
-    window.dispatchEvent(new Event(NAVIGATE_EVENT));
+    setCurrentPath(path);
   };
 
   return {

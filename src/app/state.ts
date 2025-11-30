@@ -1,6 +1,6 @@
 import type { QuizState } from "../types/quiz";
 
-export { useRouter } from "../hooks/useRouter";
+export { useRouterContext } from "./RouterContext";
 
 const STORAGE_KEY = "quiz-state";
 

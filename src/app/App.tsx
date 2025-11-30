@@ -1,3 +1,4 @@
+import { RouterProvider } from "./RouterContext";
 import { Router } from "./router";
 import HomePage from "../pages/HomePage";
 import QuestionOnePage from "../pages/QuestionOnePage";
@@ -13,7 +14,11 @@ const routes: Routes = [
 ];
 
 const App = () => {
-  return <Router routes={routes} />;
+  return (
+    <RouterProvider>
+      <Router routes={routes} />
+    </RouterProvider>
+  );
 };
 
 export default App;

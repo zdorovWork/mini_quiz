@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useRouter } from "../app/state";
+import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
 
 const QuestionOnePage = () => {
-  const { navigate } = useRouter();
+  const { navigate } = useRouterContext();
   const { state, setAnswer } = useQuizState();
   const question = QUIZ_QUESTIONS[0];
 

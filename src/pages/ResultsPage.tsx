@@ -1,11 +1,11 @@
-import { useRouter } from "../app/state";
+import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
 import { resetState } from "../app/state";
 import { QUIZ_QUESTIONS } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
 
 const ResultsPage = () => {
-  const { navigate } = useRouter();
+  const { navigate } = useRouterContext();
   const { state } = useQuizState();
 
   const handleTryAgain = () => {
