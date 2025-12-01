@@ -1,18 +1,22 @@
 import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
-import { QUIZ_QUESTIONS } from "../utils/questions";
+import { quizService } from "../utils/quizService";
 import { Button, Card, Typography } from "../components";
 import { useEffect } from "react";
 import { ROUTES } from "../types/router";
 
 const ResultsPage = () => {
   const { replace } = useRouterContext();
-  const { getLastAnsweredQuestionId, areAllQuestionsAnswered, resetProgress } =
-    useQuizState();
+  const {
+    state,
+    getLastAnsweredQuestionId,
+    areAllQuestionsAnswered,
+    resetProgress,
+  } = useQuizState();
 
   const handleTryAgain = () => {
     resetProgress();
-    const firstQuestionId = getLastAnsweredQuestionId();
+    const firstQuestionId = quizService.getFirstQuestionId();
     if (firstQuestionId) {
       replace(`${ROUTES.QUESTION}/${firstQuestionId}`);
     }
@@ -20,7 +24,7 @@ const ResultsPage = () => {
 
   const calculateScore = () => {
     let correct = 0;
-    QUIZ_QUESTIONS.forEach((question) => {
+    quizService.getAllQuestions().forEach((question) => {
       const userAnswer = state.answers[question.id];
       if (userAnswer === question.correct) {
         correct++;
@@ -30,7 +34,7 @@ const ResultsPage = () => {
   };
 
   const score = calculateScore();
-  const total = QUIZ_QUESTIONS.length;
+  const total = quizService.getTotalQuestions();
 
   useEffect(() => {
     if (!areAllQuestionsAnswered()) {
@@ -100,7 +104,7 @@ const ResultsPage = () => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "20px" }}
             >
-              {QUIZ_QUESTIONS.map((question, index) => {
+              {quizService.getAllQuestions().map((question, index) => {
                 const userAnswer = state.answers[question.id];
                 const isCorrect = userAnswer === question.correct;
 

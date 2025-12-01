@@ -1,7 +1,7 @@
 import { ComponentProps, useEffect, useState } from "react";
 import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
-import { QUIZ_QUESTIONS, QUIZ_ORDER } from "../utils/questions";
+import { quizService } from "../utils/quizService";
 import QuestionPageLayout from "./components/QuestionPageLayout";
 import { Button, Typography } from "../components";
 import ButtonList from "./components/ButtonList";
@@ -31,14 +31,13 @@ const QuestionPage = ({ questionId }: { questionId: string }) => {
 
   const { showModal } = useModal<TEmailModalProps>()(EmailModal);
 
-  const question = QUIZ_QUESTIONS.find((q) => q.id === questionId);
-  const questionIndex = QUIZ_ORDER.indexOf(questionId);
-  const isLastQuestion = questionIndex === QUIZ_ORDER.length - 1;
+  const question = quizService.getQuestionById(questionId);
+  const questionIndex = quizService.getQuestionIndex(questionId);
+  const isLastQuestion = quizService.isLastQuestion(questionId);
 
-  const answer = getAnswer(questionId);
-  console.log("answer", answer);
-
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(answer);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(
+    getAnswer(questionId)
+  );
 
   const handleAnswerSelect = (index: number) => {
     setSelectedAnswer(index);
@@ -67,7 +66,7 @@ const QuestionPage = ({ questionId }: { questionId: string }) => {
 
     const nextQuestionId = getNextQuestionId(questionId);
     if (nextQuestionId) {
-      navigate(`/question/${nextQuestionId}`);
+      navigate(`${ROUTES.QUESTION}/${nextQuestionId}`);
     }
   };
 
@@ -93,7 +92,7 @@ const QuestionPage = ({ questionId }: { questionId: string }) => {
       <QuestionPageLayout
         label={
           <Typography size="small" color="secondary" weight="medium">
-            Question {questionIndex + 1} of {QUIZ_ORDER.length}
+            Question {questionIndex + 1} of {quizService.getTotalQuestions()}
           </Typography>
         }
         title={

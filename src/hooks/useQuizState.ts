@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { loadState, saveState, resetState } from "../app/state";
 import type { QuizState } from "../types/quiz";
-import { QUIZ_ORDER } from "../utils/questions";
+import { quizService } from "../utils/quizService";
 
 interface UseQuizStateReturn {
   state: QuizState;
@@ -40,7 +40,10 @@ export const useQuizState = () => {
 
   // TODO: can combine with getLastAnsweredQuestionId
   const isAnsweredQuetionsBeftore = (questionId: string) => {
-    const questionsBefore = QUIZ_ORDER.slice(0, QUIZ_ORDER.indexOf(questionId));
+    const questionIndex = quizService.getQuestionIndex(questionId);
+    const questionsBefore = quizService
+      .getQuestionOrder()
+      .slice(0, questionIndex);
     return questionsBefore.every(
       (qId) =>
         stateRef.current.answers[qId] !== null &&
@@ -49,24 +52,27 @@ export const useQuizState = () => {
   };
 
   const getLastAnsweredQuestionId = () => {
-    return QUIZ_ORDER.find(
-      (qId) =>
-        stateRef.current.answers[qId] === null ||
-        stateRef.current.answers[qId] === undefined
-    );
+    return quizService
+      .getQuestionOrder()
+      .find(
+        (qId) =>
+          stateRef.current.answers[qId] === null ||
+          stateRef.current.answers[qId] === undefined
+      );
   };
 
   const areAllQuestionsAnswered = () => {
-    return QUIZ_ORDER.every(
-      (qId) =>
-        stateRef.current.answers[qId] !== null &&
-        stateRef.current.answers[qId] !== undefined
-    );
+    return quizService
+      .getQuestionOrder()
+      .every(
+        (qId) =>
+          stateRef.current.answers[qId] !== null &&
+          stateRef.current.answers[qId] !== undefined
+      );
   };
 
   const getNextQuestionId = (questionId: string) => {
-    const questionIndex = QUIZ_ORDER.indexOf(questionId);
-    return QUIZ_ORDER[questionIndex + 1];
+    return quizService.getNextQuestionId(questionId);
   };
 
   const hasAlreadyResults = () => {

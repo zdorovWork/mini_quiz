@@ -1,7 +1,6 @@
 import { RouterProvider } from "./RouterContext";
 import { Router } from "./router";
 import HomePage from "../pages/HomePage";
-import QuestionPage from "../pages/QuestionPage";
 import ResultsPage from "../pages/ResultsPage";
 import { ROUTES, type TRoutes } from "../types/router";
 import { ModalProvider } from "./ModalContext";
