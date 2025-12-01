@@ -4,10 +4,10 @@ import { useQuizState } from "../hooks/useQuizState";
 import { QUIZ_QUESTIONS, QUIZ_ORDER } from "../utils/questions";
 import QuestionPageLayout from "./components/QuestionPageLayout";
 import { Button, Typography } from "../components";
-import ButtonList from "./components/QuestionPageLayout/ButtonList";
+import ButtonList from "./components/ButtonList";
 import { useModal } from "../app/ModalContext";
-import { EmailModal } from "./QuestionTwoPage/modals/EmailModal/EmailModal";
 import { ROUTES } from "../types/router";
+import { EmailModal } from "./modals/EmailModal/EmailModal";
 
 type TEmailModalProps = ComponentProps<
   typeof EmailModal
@@ -15,8 +15,8 @@ type TEmailModalProps = ComponentProps<
   ? T
   : never;
 
-const QuestionPage = () => {
-  const { replace, navigate, currentPath } = useRouterContext();
+const QuestionPage = ({ questionId }: { questionId: string }) => {
+  const { replace, navigate } = useRouterContext();
   const {
     state,
     setAnswer,
@@ -26,16 +26,19 @@ const QuestionPage = () => {
     areAllQuestionsAnswered,
     getNextQuestionId,
     hasAlreadyResults,
+    getAnswer,
   } = useQuizState();
 
   const { showModal } = useModal<TEmailModalProps>()(EmailModal);
 
-  const questionId = currentPath.split("/").pop() || "";
   const question = QUIZ_QUESTIONS.find((q) => q.id === questionId);
   const questionIndex = QUIZ_ORDER.indexOf(questionId);
   const isLastQuestion = questionIndex === QUIZ_ORDER.length - 1;
 
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const answer = getAnswer(questionId);
+  console.log("answer", answer);
+
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(answer);
 
   const handleAnswerSelect = (index: number) => {
     setSelectedAnswer(index);
@@ -72,15 +75,9 @@ const QuestionPage = () => {
     if (!isAnsweredQuetionsBeftore(questionId)) {
       const lastAnsweredQuestionId = getLastAnsweredQuestionId();
       if (lastAnsweredQuestionId) {
-        // TODO: move to routes object ROUTES
-        replace(`/question/${lastAnsweredQuestionId}`);
+        replace(`${ROUTES.QUESTION}/${lastAnsweredQuestionId}`);
       }
     }
-  }, [questionId]);
-
-  // TODO: should be reailzed via key
-  useEffect(() => {
-    setSelectedAnswer(state.answers[questionId] ?? null);
   }, [questionId]);
 
   if (!question || questionIndex === -1) {

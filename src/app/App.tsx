@@ -5,10 +5,11 @@ import QuestionPage from "../pages/QuestionPage";
 import ResultsPage from "../pages/ResultsPage";
 import { ROUTES, type TRoutes } from "../types/router";
 import { ModalProvider } from "./ModalContext";
+import { QuestionPageWrapper } from "../pages/QuestionPageWrapper";
 
 const routes: TRoutes = [
   { path: ROUTES.HOME, element: <HomePage /> },
-  { path: "/question/:questionId", element: <QuestionPage /> },
+  { path: "/question/:questionId", element: <QuestionPageWrapper /> },
   { path: ROUTES.RESULTS, element: <ResultsPage /> },
 ];
 

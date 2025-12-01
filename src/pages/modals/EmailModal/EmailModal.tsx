@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Input, Modal, Typography } from "../../../../components";
-import { validateEmail } from "../../../../utils/validation";
+import { Button, Input, Modal, Typography } from "../../../components";
+import { validateEmail } from "../../../utils/validation";
 
 type TEmailModalProps = {
   initialEmail?: string;

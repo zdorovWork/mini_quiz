@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { loadState, saveState } from "../app/state";
+import { useRef } from "react";
+import { loadState, saveState, resetState } from "../app/state";
 import type { QuizState } from "../types/quiz";
 import { QUIZ_ORDER } from "../utils/questions";
 
@@ -12,28 +12,28 @@ interface UseQuizStateReturn {
   getLastAnsweredQuestionId: () => string | undefined;
   getNextQuestionId: (questionId: string) => string | undefined;
   hasAlreadyResults: () => boolean;
+  resetProgress: () => void;
+  getAnswer: (questionId: string) => number | null;
 }
 
 export const useQuizState = () => {
-  const [state, setState] = useState<QuizState>(loadState);
-
-  useEffect(() => {
-    saveState(state);
-  }, [state]);
+  const stateRef = useRef<QuizState>(loadState());
 
   const setAnswer = (questionId: string, index: number) => {
-    setState((prev) => ({
-      ...prev,
+    const newState = {
+      ...stateRef.current,
       answers: {
-        ...prev.answers,
+        ...stateRef.current.answers,
         [questionId]: index,
       },
-    }));
+    };
+    stateRef.current = newState;
+    saveState(newState);
   };
 
   const setEmail = (email: string) => {
     saveState({
-      ...state,
+      ...stateRef.current,
       email,
     });
   };
@@ -42,19 +42,25 @@ export const useQuizState = () => {
   const isAnsweredQuetionsBeftore = (questionId: string) => {
     const questionsBefore = QUIZ_ORDER.slice(0, QUIZ_ORDER.indexOf(questionId));
     return questionsBefore.every(
-      (qId) => state.answers[qId] !== null && state.answers[qId] !== undefined
+      (qId) =>
+        stateRef.current.answers[qId] !== null &&
+        stateRef.current.answers[qId] !== undefined
     );
   };
 
   const getLastAnsweredQuestionId = () => {
     return QUIZ_ORDER.find(
-      (qId) => state.answers[qId] === null || state.answers[qId] === undefined
+      (qId) =>
+        stateRef.current.answers[qId] === null ||
+        stateRef.current.answers[qId] === undefined
     );
   };
 
   const areAllQuestionsAnswered = () => {
     return QUIZ_ORDER.every(
-      (qId) => state.answers[qId] !== null && state.answers[qId] !== undefined
+      (qId) =>
+        stateRef.current.answers[qId] !== null &&
+        stateRef.current.answers[qId] !== undefined
     );
   };
 
@@ -64,11 +70,22 @@ export const useQuizState = () => {
   };
 
   const hasAlreadyResults = () => {
-    return state.email !== null && state.email !== undefined;
+    return (
+      stateRef.current.email !== null && stateRef.current.email !== undefined
+    );
+  };
+
+  const resetProgress = () => {
+    resetState();
+    stateRef.current = loadState();
+  };
+
+  const getAnswer = (questionId: string) => {
+    return stateRef.current.answers[questionId] ?? null;
   };
 
   return {
-    state,
+    state: stateRef.current,
     setAnswer,
     setEmail,
     isAnsweredQuetionsBeftore,
@@ -76,5 +93,7 @@ export const useQuizState = () => {
     areAllQuestionsAnswered,
     getNextQuestionId,
     hasAlreadyResults,
+    resetProgress,
+    getAnswer,
   } satisfies UseQuizStateReturn;
 };

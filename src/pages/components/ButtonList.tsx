@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Button } from "../../../components";
+import { Button } from "../../components";
 
 interface ButtonListProps<T> {
   items: T[];

@@ -1,21 +1,20 @@
 import { useRouterContext } from "../app/state";
 import { useQuizState } from "../hooks/useQuizState";
-import { resetState } from "../app/state";
-import { QUIZ_QUESTIONS, QUIZ_ORDER } from "../utils/questions";
+import { QUIZ_QUESTIONS } from "../utils/questions";
 import { Button, Card, Typography } from "../components";
 import { useEffect } from "react";
+import { ROUTES } from "../types/router";
 
 const ResultsPage = () => {
   const { replace } = useRouterContext();
-  const { state, getLastAnsweredQuestionId, areAllQuestionsAnswered } =
+  const { getLastAnsweredQuestionId, areAllQuestionsAnswered, resetProgress } =
     useQuizState();
 
   const handleTryAgain = () => {
-    // TODO: shouldnt be imoported like that
-    resetState();
-    const firstQuestionId = QUIZ_ORDER[0];
+    resetProgress();
+    const firstQuestionId = getLastAnsweredQuestionId();
     if (firstQuestionId) {
-      replace(`/question/${firstQuestionId}`);
+      replace(`${ROUTES.QUESTION}/${firstQuestionId}`);
     }
   };
 
@@ -37,8 +36,7 @@ const ResultsPage = () => {
     if (!areAllQuestionsAnswered()) {
       const lastAnsweredQuestionId = getLastAnsweredQuestionId();
       if (lastAnsweredQuestionId) {
-        // TODO: move to routes object ROUTES
-        replace(`/question/${lastAnsweredQuestionId}`);
+        replace(`${ROUTES.QUESTION}/${lastAnsweredQuestionId}`);
       }
     }
   }, []);
