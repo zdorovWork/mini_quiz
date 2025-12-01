@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Card } from "../../../components";
+import { Card } from "../../../../components";
 import "./QuestionPageLayout.css";
 
 interface QuestionPageLayoutProps {
