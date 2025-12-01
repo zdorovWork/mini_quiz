@@ -1,49 +1,9 @@
-import { useRouterContext } from "../app/state";
-import { useQuizState } from "../hooks/useQuizState";
-import { quizService } from "../utils/quizService";
-import { Button, Card, Typography } from "../components";
-import { useEffect } from "react";
-import { ROUTES } from "../types/router";
+import { Button, Card, Typography } from "../../components";
+import { useResultsPage } from "./useResultsPage";
 
 const ResultsPage = () => {
-  const { replace } = useRouterContext();
-  const {
-    state,
-    getLastAnsweredQuestionId,
-    areAllQuestionsAnswered,
-    resetProgress,
-  } = useQuizState();
-
-  const handleTryAgain = () => {
-    resetProgress();
-    const firstQuestionId = quizService.getFirstQuestionId();
-    if (firstQuestionId) {
-      replace(`${ROUTES.QUESTION}/${firstQuestionId}`);
-    }
-  };
-
-  const calculateScore = () => {
-    let correct = 0;
-    quizService.getAllQuestions().forEach((question) => {
-      const userAnswer = state.answers[question.id];
-      if (userAnswer === question.correct) {
-        correct++;
-      }
-    });
-    return correct;
-  };
-
-  const score = calculateScore();
-  const total = quizService.getTotalQuestions();
-
-  useEffect(() => {
-    if (!areAllQuestionsAnswered()) {
-      const lastAnsweredQuestionId = getLastAnsweredQuestionId();
-      if (lastAnsweredQuestionId) {
-        replace(`${ROUTES.QUESTION}/${lastAnsweredQuestionId}`);
-      }
-    }
-  }, []);
+  const { state, handleTryAgain, score, total, allQuestions } =
+    useResultsPage();
 
   return (
     <div
@@ -104,7 +64,7 @@ const ResultsPage = () => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "20px" }}
             >
-              {quizService.getAllQuestions().map((question, index) => {
+              {allQuestions.map((question, index) => {
                 const userAnswer = state.answers[question.id];
                 const isCorrect = userAnswer === question.correct;
 

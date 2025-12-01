@@ -4,7 +4,7 @@ import HomePage from "../pages/HomePage";
 import ResultsPage from "../pages/ResultsPage";
 import { ROUTES, type TRoutes } from "../types/router";
 import { ModalProvider } from "./ModalContext";
-import { QuestionPageWrapper } from "../pages/QuestionPageWrapper";
+import { QuestionPageWrapper } from "../pages/QuestionPage";
 
 const routes: TRoutes = [
   { path: ROUTES.HOME, element: <HomePage /> },
